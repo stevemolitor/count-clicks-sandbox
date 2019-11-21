@@ -1,40 +1,42 @@
 import React, {useEffect, useState} from 'react'
 import ReactDOM from 'react-dom'
 
+const buttonStyle = {
+  padding: '10px',
+  fontSize: '14px',
+}
+
+const containerStyle = {
+  padding: '30px',
+}
+
+const messageStyle = {
+  margin: '20px 0',
+  fontSize: '18px',
+}
+
 const CountClicks = () => {
   const [clicks, setClicks] = useState(0)
 
-  const incrementClicks = () => {
-    setClicks(prevClicks => {
-      console.log(
-        'incrementing clicks, clicks',
-        clicks,
-        prevClicks,
-        'prevClicks',
-      )
-      return prevClicks + 1
-    })
+  function incrementClicks() {
+    setClicks(clicks + 1)
   }
 
-  const trackClicks = () => {
-    console.log('click count:', clicks)
+  function trackClicks() {
+    alert(`Total Clicks: ${clicks}`)
   }
 
   useEffect(() => {
-    window.addEventListener('click', incrementClicks)
-
     // print total clicks when component unmounts (maybe):
     return trackClicks
   }, [])
 
-  console.log('--- RENDER ---')
   return (
     <div>
-      <div>I be countin' clicks! Please click!</div>
-      <div>
-        Click below to unmount and then look at the console to see the click
-        count.
-      </div>
+      <button style={buttonStyle} onClick={incrementClicks}>
+        Click Here!
+      </button>
+      <div style={messageStyle}>Clicks: {clicks}</div>
     </div>
   )
 }
@@ -43,14 +45,19 @@ const App = () => {
   const [showClicker, setShowClick] = useState(true)
 
   return (
-    <div>
+    <div style={containerStyle}>
+      <h1>Count Clicks on Page</h1>
       {showClicker && <CountClicks />}
+      <div style={messageStyle}>
+        Click below to unmount the click tracker and see the total clicks:
+      </div>
       <button
+        style={buttonStyle}
         onClick={() => {
           setShowClick(!showClicker)
         }}
       >
-        {showClicker ? 'Unmount' : 'mount'} click tracker
+        {showClicker ? 'Unmount' : 'Mount'} Click Tracker
       </button>
     </div>
   )
