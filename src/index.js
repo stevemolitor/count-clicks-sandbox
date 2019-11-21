@@ -23,7 +23,7 @@ const CountClicks = () => {
   }
 
   function trackClicks() {
-    alert(`Total Clicks: ${clicks}`)
+    console.log(`Total Clicks: ${clicks}`)
   }
 
   useEffect(() => {
@@ -31,12 +31,12 @@ const CountClicks = () => {
     return trackClicks
   }, [])
 
+  console.log('rendering, clicks count:', clicks)
   return (
     <div>
       <button style={buttonStyle} onClick={incrementClicks}>
         Click Here!
       </button>
-      <div style={messageStyle}>Clicks: {clicks}</div>
     </div>
   )
 }
@@ -49,7 +49,8 @@ const App = () => {
       <h1>Count Clicks on Page</h1>
       {showClicker && <CountClicks />}
       <div style={messageStyle}>
-        Click below to unmount the click tracker and see the total clicks:
+        Click below to unmount the click tracker and see the total clicks in the
+        console:
       </div>
       <button
         style={buttonStyle}
