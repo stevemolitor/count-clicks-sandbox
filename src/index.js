@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useRef, useState} from 'react'
 import ReactDOM from 'react-dom'
 
 const buttonStyle = {
@@ -16,14 +16,14 @@ const messageStyle = {
 }
 
 const CountClicks = () => {
-  const [clicks, setClicks] = useState(0)
+  const clicksRef = useRef(0)
 
   function incrementClicks() {
-    setClicks(clicks + 1)
+    clicksRef.current += 1
   }
 
   function trackClicks() {
-    console.log(`Total Clicks: ${clicks}`)
+    console.log(`Total Clicks: ${clicksRef.current}`)
   }
 
   const trackClicksCallback = useCallback(trackClicks, [])
@@ -33,7 +33,7 @@ const CountClicks = () => {
     return trackClicksCallback
   }, [trackClicksCallback])
 
-  console.log('rendering, clicks count:', clicks)
+  console.log('rendering, clicks count:', clicksRef.current)
   return (
     <div>
       <button style={buttonStyle} onClick={incrementClicks}>
