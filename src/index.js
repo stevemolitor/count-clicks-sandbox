@@ -19,7 +19,6 @@ const CountClicks = () => {
   const [clicks, setClicks] = useState(0)
 
   function incrementClicks() {
-    console.log('incrementClicks')
     // setClicks(clicks + 1)
     setClicks(prevClicks => prevClicks + 1)
   }
@@ -35,8 +34,12 @@ const CountClicks = () => {
   useEffect(() => {
     window.addEventListener('click', incrementClicksCallback)
 
-    // print total clicks when component unmounts (maybe):
-    return trackClicksCallback
+    return () => {
+      window.removeEventListener('click', incrementClicksCallback)
+
+      // print total clicks when component unmounts (maybe):
+      trackClicksCallback()
+    }
   }, [incrementClicksCallback, trackClicksCallback])
 
   console.log('rendering, clicks count:', clicks)
