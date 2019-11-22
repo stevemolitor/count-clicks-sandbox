@@ -22,6 +22,8 @@ const CountClicks = () => {
     clicksRef.current += 1
   }
 
+  const incrementClicksCallback = useCallback(incrementClicks)
+
   function trackClicks() {
     console.log(`Total Clicks: ${clicksRef.current}`)
   }
@@ -29,11 +31,15 @@ const CountClicks = () => {
   const trackClicksCallback = useCallback(trackClicks, [])
 
   useEffect(() => {
-    window.addEventListener('click', incrementClicks)
+    window.addEventListener('click', incrementClicksCallback)
 
-    // print total clicks when component unmounts (maybe):
-    return trackClicksCallback
-  }, [trackClicksCallback])
+    return () => {
+      window.removeEventListener('click', incrementClicksCallback)
+
+      // print total clicks when component unmounts (maybe):
+      trackClicksCallback()
+    }
+  }, [incrementClicksCallback, trackClicksCallback])
 
   console.log('rendering, clicks count:', clicksRef.current)
   return (
