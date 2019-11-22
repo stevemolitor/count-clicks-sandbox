@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import ReactDOM from 'react-dom'
 
 const buttonStyle = {
@@ -26,10 +26,12 @@ const CountClicks = () => {
     console.log(`Total Clicks: ${clicks}`)
   }
 
+  const trackClicksCallback = useCallback(trackClicks, [])
+
   useEffect(() => {
     // print total clicks when component unmounts (maybe):
-    return trackClicks
-  }, [])
+    return trackClicksCallback
+  }, [trackClicksCallback])
 
   console.log('rendering, clicks count:', clicks)
   return (
