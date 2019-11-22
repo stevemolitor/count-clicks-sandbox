@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {Component, useState} from 'react'
 import ReactDOM from 'react-dom'
 
 const buttonStyle = {
@@ -15,30 +15,37 @@ const messageStyle = {
   fontSize: '18px',
 }
 
-const CountClicks = () => {
-  const [clicks, setClicks] = useState(0)
-
-  function incrementClicks() {
-    setClicks(clicks + 1)
+class CountClicks extends Component {
+  state = {
+    clicks: 0,
   }
 
-  function trackClicks() {
-    console.log(`Total Clicks: ${clicks}`)
+  incrementClicks = () => {
+    const {state} = this
+    this.setState({clicks: state.clicks + 1})
   }
 
-  useEffect(() => {
-    // print total clicks when component unmounts (maybe):
-    return trackClicks
-  }, [])
+  trackClicks = () => {
+    const {state} = this
+    console.log(`Total Clicks: ${state.clicks}`)
+  }
 
-  console.log('rendering, clicks count:', clicks)
-  return (
-    <div>
-      <button style={buttonStyle} onClick={incrementClicks}>
-        Click Here!
-      </button>
-    </div>
-  )
+  componentWillUnmount() {
+    this.trackClicks()
+  }
+
+  render() {
+    const {state} = this
+    console.log('rendering, clicks count:', state.clicks)
+
+    return (
+      <div>
+        <button style={buttonStyle} onClick={this.incrementClicks}>
+          Click Here!
+        </button>
+      </div>
+    )
+  }
 }
 
 const App = () => {
