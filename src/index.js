@@ -19,8 +19,8 @@ const CountClicks = () => {
   const [clicks, setClicks] = useState(0)
 
   function incrementClicks() {
-    // setClicks(clicks + 1)
-    setClicks(prevClicks => prevClicks + 1)
+    setClicks(clicks + 1)
+    // setClicks(prevClicks => prevClicks + 1)
   }
 
   const incrementClicksCallback = useCallback(incrementClicks, [])
